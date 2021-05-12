@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <video src="../../public/video/about-video.mp4" autoplay loop playsinline muted></video>
+    <video src="/video/about-video.mp4" autoplay loop playsinline muted></video>
     <div class="content-container">
       <div class="line">
         <div>
@@ -31,15 +31,7 @@
 </script>
 
 <style scoped>
-  video {
-    object-fit: cover;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1000;
-  }
+  @import "/styles/about.css";
   .content-container{
     background: rgba(0, 0, 0, .1);
     width: 100vw;
@@ -47,60 +39,7 @@
     color:#fff;
     padding: 17% 10%;
   }
-  .line{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-  }
-  .line:last-child{
-    justify-content: flex-start;
-  }
-  .line div{
-    width: 55%;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    font-family: Roboto;
-  }
-  .line h1{
-    font-family: "Roboto Medium";
-    margin-bottom: 20px;
-    font-size: 50px;
-  }
-  .line p{
-    overflow: auto;
-  }
-  .link-btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 56px;
-    background: #2211E2;
-    border-radius: 28px;
-    margin-top: 100px;
-    cursor: pointer;
-    transition: .3s;
-    border: none;
-    outline: none;
-  }
-
-  .link-btn:hover{
-    background: #fff;
-  }
-  .link-btn:hover a{
-    color: #2211E2;
-  }
-
-  .link-btn a{
-    display: block;
-    text-align: center;
-    line-height: 56px;
-    width: 100%;
-    height: 100%;
-    color: #fff;
-    font-family: "Roboto Medium";
-    text-decoration: none;
-    font-size: 1.1rem;
+  .main{
+    background: none;
   }
 </style>

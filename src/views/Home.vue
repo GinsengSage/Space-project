@@ -4,23 +4,21 @@
       <div class="gradient-container">
         <div class="content-container">
           <div>
-            <h1>Space tourism</h1>
+            <transition appear @before-enter="h1BeforeEnter" @enter="h1Enter">
+              <h1>Space tourism</h1>
+            </transition>
             <h3>To space and back safely</h3>
             <button class="link-btn">
-              <router-link tag="a" to="/tours">Get started</router-link>
+              <router-link tag="a" to="/about">Get started</router-link>
             </button>
           </div>
-          <div>
-            <p>
-              1°16′59″  36°49′00″
-            </p>
-          </div>
+          <div></div>
         </div>
       </div>
     </div>
     <div class="info-container">
       <div class="img-container">
-        <img src="../../public/images/rangres.jpg">
+        <img src="/images/rangers.jpg">
       </div>
       <div class="info-text-container">
         <p style="color: #2211E2">Don't know who we are?</p>
@@ -49,25 +47,25 @@
         <p class="small-text">Top qualiryresours from brand like</p>
         <div class="brand-container">
           <div>
-            <img src="../../public/images/nike.png">
+            <img src="/images/nike.png">
           </div>
           <div>
-            <img src="../../public/images/spacex.png">
+            <img src="/images/spacex.png">
           </div>
           <div>
-            <img src="../../public/images/nasa.png">
+            <img src="/images/nasa.png">
           </div>
         </div>
       </div>
     </div>
     <div class="cards-container">
-      <PlaceCard></PlaceCard>
-      <PlaceCard></PlaceCard>
-      <PlaceCard></PlaceCard>
+      <PlaceCard v-for="place in places" :key="place.name" v-bind:place="place" v-bind:planet-id="place.planetId"></PlaceCard>
     </div>
     <div class="expedition-container">
       <div class="expedition-text-container">
-        <h1>Our first expedition 100 years ago</h1>
+        <transition>
+          <h1>Our first expedition 100 years ago</h1>
+        </transition>
         <p>
           Vidisse moderatius duo et. Est fugit graeci iisque ne, nam ne viderer mnesarchum, per an modo necessitatibus.
           Ad eos erant comprehensam. An mel iuvaret repudiandae, dicant electram sententiae quo ei.
@@ -84,86 +82,147 @@
       </div>
       <div class="expedition-video-container">
         <video controls="controls" muted autoplay>
-          <source src="../../public/video/crew-dragon.mp4">
+          <source src="/video/crew-dragon.mp4">
         </video>
       </div>
     </div>
     <div class="planet-cards-container">
-      <h1>Best offers</h1>
+      <h2>Best offers</h2>
       <h4>Habeo persecuti et mea, nostrud pertinax repudiare pri an.</h4>
       <div>
-        <PlanetCard></PlanetCard>
-        <PlanetCard></PlanetCard>
-        <PlanetCard></PlanetCard>
+        <PlanetCard v-for="planetCardKey in planetCardKeys" :key="planetCardKey" v-bind:id="planetCardKey"></PlanetCard>
       </div>
     </div>
     <div class="potential-fight-container">
-      <h1>Evaluate your potential fligh</h1>
+      <h2>Evaluate your potential fligh</h2>
       <h4>Habeo persecuti et mea, nostrud pertinax repudiare pri an.</h4>
-      <form action="">
+      <form>
         <div>
-          <p>From</p>
+            <p style="color: #000; font-family: 'Roboto Black'">From</p>
           <select>
-            <option>Never ending Sun</option>
-            <option>Dragon fuel</option>
+            <option selected value="Earth">Earth</option>
           </select>
         </div>
         <div>
-          <p>To</p>
-          <select>
-            <option>Never ending Sun</option>
-            <option>Dragon fuel</option>
+          <p style="color: #000; font-family: 'Roboto Black'">To</p>
+          <select v-model="to">
+            <option selected value="Eris">Eris</option>
+            <option value="Jupiter">Jupiter</option>
+            <option value="Mars">Mars</option>
+            <option value="Mercury">Mercury</option>
+            <option value="Neptune">Neptune</option>
+            <option value="Pluto">Pluto</option>
+            <option value="Saturn">Saturn</option>
+            <option value="Titan">Titan</option>
+            <option value="Uranus">Uranus</option>
+            <option value="Venus">Venus</option>
           </select>
         </div>
-        <input type="datetime-local">
+        <input v-model="date" type="date">
         <div>
-          <p>Passagers</p>
-          <input type="number" value="1" max="10" min="1">
+          <p style="color: #000; font-family: 'Roboto Black'">Passengers</p>
+          <input type="number" v-model="countOfPassengers" max="10" min="1">
         </div>
-        <button class="link-btn" style="margin-top: 0; width: 15%">
-          <router-link tag="a" to="/tours">Order</router-link>
-        </button>
+        <input @click="showModal" type="button" class="link-btn" value="Order" style="margin-top: 0; width: 15%"/>
       </form>
       <Footer></Footer>
     </div>
   </div>
+  <Modal ref="modal" v-show="isModalVisible" v-bind:to="to" v-bind:date="date" v-bind:count-of-passengers="countOfPassengers" @close="closeModal"/>
 </template>
 
 <script>
   import PlaceCard from "../components/PlaceCard";
   import PlanetCard from "../components/PlanetCard";
   import Footer from "../components/Footer";
+  import Modal from "../components/Modal";
+
+  import gsap from "gsap";
+  import firebase from "firebase";
+
+  // import insertPlanet from "../db/db-seeder";
+
   export default {
     name: "Home",
     components: {
       Footer,
       PlanetCard,
-      PlaceCard
-    }
+      PlaceCard,
+      Modal
+    },
+    setup(){
+      const h1BeforeEnter = (el) => {
+        el.style.opacity = 0
+      }
+      const h1Enter = (el) => {
+        gsap.to(el, {
+          duration: 1.5,
+          marginBottom: 0,
+          opacity: 1,
+          ease: 'easeInOut'
+        })
+      }
+      const h1Appear = el => {
+        gsap.to(el, {
+          duration: 1.5,
+          marginBottom: 0,
+          opacity: 1,
+          fontSize: 56,
+          ease: 'easeInOut'
+        })
+      }
+      return {h1BeforeEnter, h1Enter, h1Appear}
+    },
+    data(){
+      return{
+        planetCardKeys: [],
+        planets: [],
+        places: [],
+        isModalVisible: false,
+        from: 'Earth',
+        to: 'Eris',
+        date: Date.now(),
+        countOfPassengers: 1
+      }
+    },
+    methods:{
+      showModal() {
+        this.$refs.modal.init()
+        this.isModalVisible = true
+      },
+      closeModal(){
+        this.isModalVisible = false
+      },
+      getRandomInt(max) {
+        return Math.floor(Math.random() * max)
+      }
+    },
+    mounted() {
+      const dbRefObject = firebase.database().ref('/planets');
+      dbRefObject.on('value',  snap => {
+        this.planetCardKeys = Object.keys(snap.val()).slice(0,3);
+        this.planets = Object.values(snap.val());
+
+
+        for(let i = 0; i < 3; i++){
+          this.places.push(Object.assign(
+              { ...this.planets[i].places[this.getRandomInt(this.planets[i].places.length)]},
+              { planetId: this.planetCardKeys[i] }
+          ))
+        }
+      });
+    },
   }
 </script>
 
 <style scoped>
+  @import "/styles/home.css";
   .main{
     background: #000;
   }
-  .full-screen-img-container{
-    z-index: -1000;
-    width: 100%;
-    height: 100vh;
-    background-image: url("../../public/images/full-screen-image.jpg");
-    background-size: cover;
-  }
-  .gradient-container{
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent 40%, black);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .content-container{
-    width: 80%;
+  .planet-cards-container div{
+    margin-top: 15px;
+    width: 90%;
     display: flex;
   }
   h1{
@@ -172,10 +231,62 @@
     color: #fff;
     text-transform: uppercase;
   }
+  .link-btn a{
+    display: block;
+    text-align: center;
+    line-height: 56px;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-family: "Roboto Medium";
+    text-decoration: none;
+    font-size: 1.1rem;
+  }
+  h2{
+    font-family: "Roboto Black";
+    color: #fff;
+    font-size: 4em;
+    text-transform: uppercase;
+  }
   h3{
     font-size: 2em;
     font-family: Roboto;
     color: #fff;
+  }
+  .content-container div:last-of-type p{
+    display: block;
+    writing-mode: vertical-lr;
+    font-family: Roboto;
+    color: #fff;
+    font-size: 1.1rem;
+  }
+  .content-container div:last-child{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 5%;
+  }
+  .content-container{
+    width: 80%;
+    display: flex;
+  }
+  .content-container div:first-child{
+    width: 95%;
+  }
+  .info-container{
+    width: 100%;
+    display: flex;
+    position: relative;
+    background: #000;
+    margin-top: 50px;
+    padding-bottom: 50px;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+  .content-container h1{
+    margin-bottom: 300px;
   }
   .link-btn{
     display: flex;
@@ -191,253 +302,11 @@
     border: none;
     outline: none;
   }
-
   .link-btn:hover{
     background: #fff;
-  }
-  .link-btn:hover a{
-    color: #2211E2;
-  }
-
-  .link-btn a{
-    display: block;
-    text-align: center;
-    line-height: 56px;
-    width: 100%;
-    height: 100%;
-    color: #fff;
-    font-family: "Roboto Medium";
-    text-decoration: none;
-    font-size: 1.1rem;
-  }
-  .content-container div:first-child{
-    width: 95%;
-  }
-  .content-container div:last-child{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 5%;
-  }
-  .content-container div:last-of-type p{
-    display: block;
-    writing-mode: vertical-lr;
-    font-family: Roboto;
-    color: #fff;
-    font-size: 1.1rem;
-  }
-  .info-container{
-    width: 100%;
-    display: flex;
-    position: relative;
-    background: #000;
-    margin-top: 50px;
-    padding-bottom: 50px;
   }
   .info-container p{
     font-family: "Roboto Medium";
     font-size: 15px;
-  }
-  .info-container h2{
-    font-size: 50px;
-    font-family: "Roboto Black";
-    max-width: 50%;
-  }
-  .info-container{
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-  }
-  .img-container{
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-  .img-container img{
-    width: 100%;
-  }
-  .info-text-container{
-    flex:1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  div.numbers-container{
-    display: flex;
-    flex-direction: row;
-  }
-  .number{
-    display: flex;
-    flex-direction: column;
-    margin: 0 20px;
-  }
-  .number h3{
-    font-family: "Roboto Black";
-    font-size: 40px;
-  }
-  .number p{
-    font-size: 15px;
-    color: #2211E2;
-  }
-  p.info-text{
-    font-family: Roboto;
-    max-width: 70%;
-    margin-top: 20px;
-    font-size: 15px;
-    line-height: 22px;
-    margin-bottom: 20px;
-  }
-  p.small-text{
-    margin: 20px 0;
-    font-size: 15px;
-    font-family: Roboto;
-  }
-  .brand-container{
-    width: 50%;
-    display: flex;
-  }
-  .brand-container div{
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .brand-container div img{
-    width: 90%;
-  }
-  .cards-container{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 70px 0;
-  }
-  .expedition-container{
-    width: 100%;
-    display: flex;
-    padding-bottom: 50px;
-  }
-  .expedition-text-container{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .expedition-text-container h1{
-    font-size: 50px;
-    font-family: "Roboto Black";
-    max-width: 80%;
-    margin-left: 200px;
-    margin-bottom: 30px;
-  }
-  .expedition-text-container p{
-    font-size: 15px;
-    font-family: Roboto;
-    color: #fff;
-    max-width: 80%;
-    margin-left: 200px;
-  }
-  .expedition-text-container button{
-    margin-left: 200px;
-  }
-  .expedition-video-container{
-    flex: 1;
-  }
-  .expedition-video-container video{
-    margin-left: 50px;
-    width: 80%;
-    height: 90%;
-  }
-  .planet-cards-container{
-    width: 100%;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  .planet-cards-container h1, .potential-fight-container h1{
-    font-size: 60px;
-  }
-  .potential-fight-container h1{
-    margin-top: 50px;
-  }
-  .planet-cards-container h4, .potential-fight-container h4{
-    font-size: 17px;
-    font-family: Roboto;
-    font-weight: 400;
-    color: #fff;
-    margin-bottom: 40px;
-  }
-  .planet-cards-container div{
-    margin-top: 15px;
-    width: 90%;
-    display: flex;
-  }
-  .potential-fight-container{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-image: url("../../public/images/moon.png");
-    background-size: cover;
-    background-position: center;
-  }
-  .potential-fight-container form{
-    width: 80%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 100px 0;
-  }
-  .potential-fight-container form input[type=datetime-local], .potential-fight-container form div{
-    width: 17%;
-    height: 56px;
-    border-radius: 5px;
-    border: none;
-    padding: 0 10px;
-    font-family: Roboto;
-    font-size: 17px;
-  }
-  input{
-    outline: none;
-    border: none;
-    font-family: "Roboto Medium";
-    font-size: 17px;
-  }
-  select{
-    border: none;
-    border-radius: 5px;
-    outline: none;
-    font-family: "Roboto Medium";
-    font-size: 17px;
-  }
-  .potential-fight-container form div{
-    display: flex;
-    background: #fff;
-    justify-content: space-between;
-  }
-  .potential-fight-container form div p{
-    margin-right: 15px;
-    line-height: 56px;
-  }
-  /* Landscape phones and smaller */
-  @media (max-width: 480px) {
-    h1{
-      font-size: 4em;
-    }
-    h3{
-      font-size: 1em;
-    }
-    .content-container div:first-child{
-      width: 100%;
-    }
-    .content-container div:last-of-type{
-      display: none;
-    }
   }
 </style>

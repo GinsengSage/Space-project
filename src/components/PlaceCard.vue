@@ -1,14 +1,14 @@
 <template>
-  <div class="place-card-container">
+  <div :style="{ backgroundImage: 'url(' + place.image + ')' }" class="place-card-container">
     <div class="line-container">
       <div style="display: flex;">
         <div class="blue-box"></div>
         <div class="text-container">
-          <h3>{{title}}</h3>
-          <p>Location: {{location}}</p>
+          <h3>{{place.name}}</h3>
+          <p>Location: {{planetName}}</p>
         </div>
       </div>
-      <router-link to="/">
+      <router-link :to="{name: 'Place', params:{planetId:planetId, index:place.index}}">
         <div class="circle-container">
           <div class="circle">
             <div class="triangle"></div>
@@ -20,55 +20,32 @@
 </template>
 
 <script>
+  import firebase from "firebase";
+
   export default {
     name: "PlaceCard",
     data(){
       return{
-        imageSrc: '',
-        title: 'The never ending sun',
-        location: 'Mars'
+        planetName: ''
       }
+    },
+    props: {
+      planetId: String,
+      place: Object,
+    },
+    mounted() {
+      const dbRefObject = firebase.database().ref(`/planets/${this.planetId}`);
+      dbRefObject.on('value',  snap => {
+        this.planetName = snap.val().name
+      });
     }
   }
 </script>
 
 <style scoped>
-  .place-card-container{
-    width: 27%;
-    height: 270px;
-    display: flex;
-    background: url("../../public/images/places/the-never-ending-sun.jpg");
-    background-size: cover;
-    margin: 0 20px;
-  }
-  .line-container{
-    width: 100%;
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 190px;
-  }
-  .blue-box{
-    width: 10px;
-    height: 100%;
-    background: #2211E2;
-  }
-  .text-container{
-    margin-left: 10px;
-  }
-  h3{
-    font-family: "Roboto Medium";
-    color: #fff;
-    font-size: 20px;
-    letter-spacing: 1px;
-  }
-  p{
-    font-family: Roboto;
-    color: #fff;
-    font-size: 15px;
-  }
+  @import "/styles/place-card.css";
   .circle{
-    width: 40px;
+    width: 40px !important;
     height: 40px;
     border-radius: 50%;
     background: #2211E2;
@@ -76,18 +53,13 @@
     justify-content: center;
     align-items: center;
     margin-right: 20px;
-    transition: .3s;
-  }
-  .triangle{
-    margin-left: 3px;
-    width: 0;
-    height: 0;
-    border-top: 7px solid transparent;
-    border-left: 14px solid #fff;
-    border-bottom: 7px solid transparent;
+    transition: .4s;
+    font-family: "Roboto Black";
+    cursor: pointer;
   }
   .circle:hover{
     background: #fff;
+    color: #2211E2;
   }
   .circle:hover .triangle{
     border-left: 14px solid #2211E2;

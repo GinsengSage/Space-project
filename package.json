@@ -9,10 +9,13 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
+    "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
+    "firebase": "^8.4.2",
     "gsap": "^3.6.0",
     "three": "^0.126.0",
     "vue": "^3.0.0",
+    "vue-chartjs": "^3.5.1",
     "vue-router": "^4.0.4"
   },
   "devDependencies": {
