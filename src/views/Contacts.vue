@@ -2,68 +2,60 @@
   <div class="main">
     <div class="image-container">
       <div class="form-container">
-        <form>
+        <form @submit.prevent="submit">
           <div>
             <label>Name</label>
-            <input type="text">
+            <input v-model="name" type="text" required>
           </div>
           <div>
             <label>Email</label>
-            <input type="text">
+            <input pattern="^\w+([\.\w]+)*\w@\w((\.\w)*\w+)*\.\w{2,3}$" v-model="email" type="text" required>
           </div>
           <div>
             <label>Theme</label>
-            <input type="text">
+            <input v-model="theme" type="text" required>
           </div>
           <div>
             <label>Message</label>
-            <input type="text">
+            <textarea v-model="text"></textarea>
           </div>
           <div>
-            <input value="Send" type="submit">
+            <input value="Send" type="submit" required>
           </div>
         </form>
       </div>
+      <Footer/>
     </div>
   </div>
 </template>
 
 <script>
+  import Footer from "../components/Footer";
+  import firebase from "firebase";
   export default {
-    name: "Contacts"
+    name: "Contacts",
+    components: {Footer},
+    data(){
+      return{
+        name: '',
+        email: '',
+        theme: '',
+        text: ''
+      }
+    },
+    methods: {
+      submit(){
+        let message = {
+          name: this.name,
+          email: this.email,
+          theme: this.theme,
+          text: this.text
+        }
+        firebase.database().ref('/messages').push(message)
+        alert('Email was sended.')
+      }
+    }
   }
 </script>
 
-<style scoped>
-  @import "/styles/contacts.css";
-  .main{
-    position: absolute;
-    top:0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #000;
-  }
-  form div{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: 10px 0;
-  }
-  input{
-    font-size: 17px;
-    font-family: Roboto;
-    padding: 10px;
-    margin: 0 5px;
-    color: #000;
-    border-radius: 2px;
-    border:none;
-    outline: none;
-  }
-  form{
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-</style>
+<style scoped src="../../public/styles/contacts.css"></style>

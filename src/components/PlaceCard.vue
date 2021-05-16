@@ -42,26 +42,4 @@
   }
 </script>
 
-<style scoped>
-  @import "/styles/place-card.css";
-  .circle{
-    width: 40px !important;
-    height: 40px;
-    border-radius: 50%;
-    background: #2211E2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 20px;
-    transition: .4s;
-    font-family: "Roboto Black";
-    cursor: pointer;
-  }
-  .circle:hover{
-    background: #fff;
-    color: #2211E2;
-  }
-  .circle:hover .triangle{
-    border-left: 14px solid #2211E2;
-  }
-</style>
+<style scoped lang="css" src="../../public/styles/place-card.css"></style>

@@ -30,16 +30,4 @@
   }
 </script>
 
-<style scoped>
-  @import "/styles/about.css";
-  .content-container{
-    background: rgba(0, 0, 0, .1);
-    width: 100vw;
-    height: 100vh;
-    color:#fff;
-    padding: 17% 10%;
-  }
-  .main{
-    background: none;
-  }
-</style>
+<style scoped src="../../public/styles/about.css"></style>

@@ -24,7 +24,7 @@
         numberOfTours: 0,
         currentTourNumber: 0,
         planetKeys: [],
-        counter: 1
+        counter: 0
       }
     },
     methods(){
@@ -39,14 +39,4 @@
   }
 </script>
 
-<style>
- @import "/styles/tours.css";
- .main{
-   width: 100vw;
-   height: 100vh;
-   display: flex;
-   flex-direction: column;
-   justify-content: flex-end;
-   background: #000;
- }
-</style>
+<style scoped src="../../public/styles/tours.css"></style>

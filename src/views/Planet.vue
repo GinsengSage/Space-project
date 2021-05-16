@@ -75,9 +75,7 @@
         </p>
       </div>
       <div class="side-container">
-        <div class="video-container">
-          <video src=""></video>
-        </div>
+        <div :style="{backgroundImage: `url(/images/planets/${planet.name}.jpg)`}" class="image-container"></div>
       </div>
     </div>
     <div class="planet-cards-container">
@@ -227,29 +225,4 @@
   }
 </script>
 
-<style scoped>
- @import "/styles/planet.css";
- .planet-cards-container{
-   width: 90%;
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   margin-bottom: 15px;
- }
- .page-container{
-   background: #000;
- }
- h1{
-   font-size: 5em;
-   font-family: "Roboto Black";
-   color: #fff;
-   text-transform: uppercase;
- }
- h2{
-   margin-top: 20px;
-   margin-bottom: 30px;
-   font-family: "Roboto Medium";
-   color: #fff;
-   font-size: 3em;
- }
-</style>
+<style scoped src="../../public/styles/planet.css"></style>

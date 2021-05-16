@@ -9,7 +9,7 @@
             </transition>
             <h3>To space and back safely</h3>
             <button class="link-btn">
-              <router-link tag="a" to="/about">Get started</router-link>
+              <router-link tag="a" to="/tours">Get started</router-link>
             </button>
           </div>
           <div></div>
@@ -77,7 +77,7 @@
           Habeo persecuti et mea, nostrud pertinax repudiare pri an.
         </p>
         <button class="link-btn">
-          <router-link tag="a" to="/tours">About us</router-link>
+          <router-link tag="a" to="/about">About us</router-link>
         </button>
       </div>
       <div class="expedition-video-container">
@@ -215,98 +215,4 @@
   }
 </script>
 
-<style scoped>
-  @import "/styles/home.css";
-  .main{
-    background: #000;
-  }
-  .planet-cards-container div{
-    margin-top: 15px;
-    width: 90%;
-    display: flex;
-  }
-  h1{
-    font-size: 7em;
-    font-family: "Roboto Black";
-    color: #fff;
-    text-transform: uppercase;
-  }
-  .link-btn a{
-    display: block;
-    text-align: center;
-    line-height: 56px;
-    width: 100%;
-    height: 100%;
-    color: #fff;
-    font-family: "Roboto Medium";
-    text-decoration: none;
-    font-size: 1.1rem;
-  }
-  h2{
-    font-family: "Roboto Black";
-    color: #fff;
-    font-size: 4em;
-    text-transform: uppercase;
-  }
-  h3{
-    font-size: 2em;
-    font-family: Roboto;
-    color: #fff;
-  }
-  .content-container div:last-of-type p{
-    display: block;
-    writing-mode: vertical-lr;
-    font-family: Roboto;
-    color: #fff;
-    font-size: 1.1rem;
-  }
-  .content-container div:last-child{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 5%;
-  }
-  .content-container{
-    width: 80%;
-    display: flex;
-  }
-  .content-container div:first-child{
-    width: 95%;
-  }
-  .info-container{
-    width: 100%;
-    display: flex;
-    position: relative;
-    background: #000;
-    margin-top: 50px;
-    padding-bottom: 50px;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    color: white;
-  }
-  .content-container h1{
-    margin-bottom: 300px;
-  }
-  .link-btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 56px;
-    background: #2211E2;
-    border-radius: 28px;
-    margin-top: 30px;
-    cursor: pointer;
-    transition: .3s;
-    border: none;
-    outline: none;
-  }
-  .link-btn:hover{
-    background: #fff;
-  }
-  .info-container p{
-    font-family: "Roboto Medium";
-    font-size: 15px;
-  }
-</style>
+<style scoped src="../../public/styles/home.css"></style>

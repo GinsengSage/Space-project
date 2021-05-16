@@ -42,47 +42,4 @@ export default {
 }
 </script>
 
-<style scoped>
-  @import url('https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
-  @import "/styles/planet-card.css";
-  .line{
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .line h2{
-    font-family: Spartan;
-    font-weight: 400;
-    font-size: 35px;
-    text-transform: uppercase;
-    color: #fff;
-  }
-  .line p{
-    font-family: Spartan;
-    color: #fff;
-    font-size: 13px;
-  }
-  .planet-btn-container button a, .line button a{
-    display: block;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    color: #fff;
-    font-family: "Roboto";
-    text-decoration: none;
-    line-height: 30px;
-    margin: 0 10px;
-  }
-  .planet-btn-container button, .line button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #2211E2;
-    border-radius: 16px;
-    cursor: pointer;
-    transition: .3s;
-    border: none;
-    outline: none;
-  }
-</style>
+<style scoped lang="css" src="../../public/styles/planet-card.css"></style>

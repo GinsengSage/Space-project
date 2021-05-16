@@ -9,8 +9,8 @@
     <div class="btn-container">
       <input type="button" value="Get started" @click="showModal" class="link-btn">
     </div>
+    <Footer></Footer>
   </div>
-  <Footer></Footer>
 </template>
 
 <script>
@@ -42,17 +42,4 @@
   }
 </script>
 
-<style scoped>
-  @import "/styles/place.css";
-
-  h1{
-    position: absolute;
-    z-index: 101;
-    top: 50px;
-    font-family: Roboto;
-    font-size: 6.5em;
-    max-width: 50%;
-    color: #fff;
-  }
-
-</style>
+<style scoped src="../../public/styles/place.css"></style>

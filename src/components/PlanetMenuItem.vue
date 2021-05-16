@@ -54,7 +54,5 @@
   }
 </script>
 
-<style scoped>
-  @import "/styles/planet-menu-item.css";
-</style>
+<style scoped src="../../public/styles/planet-menu-item.css"></style>
 

@@ -140,6 +140,15 @@
       },
       price(value){
         this.payValue = 'Pay(' + '$' + value + ')'
+      },
+      submit(){
+        let order = {
+
+        }
+        if(confirm('Are you sure?')){
+          firebase.database().ref('/orders').push(order)
+          alert('Success')
+        }
       }
     },
     props: {
@@ -153,57 +162,4 @@
   }
 </script>
 
-<style scoped>
-  @import "/styles/modal.css";
-
-  form{
-    width: 100%;
-    background-image: url("/images/form-bg.png");
-    background-position: bottom;
-    background-repeat: no-repeat;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px 0;
-  }
-  .form-container{
-    overflow-x: auto;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    background: #232323;
-  }
-  input{
-    font-size: 20px;
-    font-family: Roboto;
-    padding: 10px;
-    margin: 0 5px;
-    color: #000;
-    border-radius: 2px;
-    outline: none;
-    border: none;
-    border-radius: 2px;
-  }
-  select{
-    font-size: 20px;
-    font-family: Roboto;
-    padding: 10px;
-    margin: 0 5px;
-    color: #000;
-  }
-  form div{
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    margin: 5px 0;
-  }
-
-  h1{
-    font-size: 3em;
-    font-family: Roboto;
-    text-transform: none;
-  }
-
-</style>
+<style scoped lang="css" src="../../public/styles/modal.css"></style>
